@@ -21,3 +21,5 @@
 
 # Ignore environment variables
 .env
+
+.trunk

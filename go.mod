@@ -20,6 +20,7 @@ require (
 
 require (
 	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/joho/godotenv v1.5.1
 	github.com/redis/go-redis/v9 v9.0.5
 	go.mongodb.org/mongo-driver v1.12.0
 	golang.org/x/net v0.9.0 // indirect
