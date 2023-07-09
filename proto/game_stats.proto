@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package gamestats;
+
+option go_package = "github.com/Avyukth/lila-assgnm";
+
+service GameStats {
+  rpc GetGameStats (GameStatsRequest) returns (GameStatsResponse) {}
+}
