@@ -7,3 +7,18 @@ option go_package = "github.com/Avyukth/lila-assgnm";
 service GameStats {
   rpc GetGameStats (GameStatsRequest) returns (GameStatsResponse) {}
 }
+
+
+message GameStatsRequest {
+  int32 area_code = 1;
+}
+
+message GameStatsResponse {
+  int32 area_code = 1;
+  repeated GameMode game_modes = 2;
+}
+
+message GameMode {
+  string mode = 1;
+  int32 players = 2;
+}
