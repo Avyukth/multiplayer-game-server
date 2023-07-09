@@ -14,3 +14,10 @@
 # IDE/Editor folders
 .vscode/
 .idea/
+
+# Proto generated files
+/api/*.pb.go
+/api/*.pb.gw.go
+
+# Ignore environment variables
+.env
