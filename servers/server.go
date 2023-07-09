@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"strings"
 
 	gamestats "github.com/Avyukth/lila-assgnm/api/proto"
 	"github.com/Avyukth/lila-assgnm/connections"
@@ -17,9 +18,23 @@ type serverConfig struct {
 }
 
 func init() {
+	var envFilePath string
+	if len(os.Args) > 1 {
+		for _, arg := range os.Args[1:] {
+			if strings.HasPrefix(arg, "-e=") {
+				envFilePath = strings.TrimPrefix(arg, "-e=")
+				break
+			}
+		}
+	}
+
+	if envFilePath == "" {
+		envFilePath = "../.env"
+	}
+
 	// loads values from .env into the system
-	if err := godotenv.Load("../.env"); err != nil {
-		log.Fatalf("No .env file found")
+	if err := godotenv.Load(envFilePath); err != nil {
+		log.Fatalf("No .env file found at path: %s", envFilePath)
 	}
 }
 

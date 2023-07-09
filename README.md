@@ -4,13 +4,9 @@ The `lila-app` service provides game statistics based on the geographic area cod
 
 ## Building and Running the Service
 
-# GameStats Microservice Project
-
-This is a GRPC-based microservice project that provides game stats based on the given area code.
-
 ## Environment Setup
 
-Make sure to create an `.env` file at the root of your project with the necessary environment variables. A `.env.local` file is also used for local builds. Refer to `.env.example` file for an example setup.
+Make sure to create an `.env` file at the root of your project with the necessary environment variables. A `.env.local` file is also used for local builds.
 
 ## Building and Running with Docker
 
@@ -51,6 +47,42 @@ The following commands are available for local builds and runs:
 
 ## Client Run Configuration
 
+---
+
 ```bash
 cd clients && go run client.go
 ```
+
+---
+
+## Requirements by Lila Assignments and task completed marked with [x]:
+
+- [x] Documentation of the web service protocol.
+- [x] The code for the web service.
+- [x] A document explaining the design choices made when creating the web service, including how your service scales to support more than a million concurrent gamers.
+- [ ] Preferred technologies:
+  - [x] Using Protobuf for model generation and Data Transfer Objects (DTOs).
+  - [x] Using a No-SQL database for persistent storage.
+  - [x] Loading sensitive information from environment variables.
+  - [x] Adding a logical cache layer (in-memory structures or Redis can be used).
+  - [x] Adding a Makefile.
+  - [x] Creating separate logical layers for handlers, business logic, cache, and storage.
+  - [ ] Writing unit tests.
+  - [x] A single docker-compose file to start all services, including the database, cache, etc.
+
+## Time Taken by Lila Assignments:
+
+- ### 30 Min [X] Documentation of the web service protocol.
+- ### 8 hrs [x] The code for the web service. ## 30 mins
+- ### 30 Min [x] A document explaining the design choices made when creating the web service, including how your service scales to support more than a million concurrent gamers.
+- [ ] Preferred technologies:
+  - #### [x] Using Protobuf for model generation and Data Transfer Objects (DTOs).
+  - #### 2 hr Integration and debugging (part of code) [x] Using a No-SQL database for persistent storage.
+  - #### 30 min Integration and debugging (part of code) [x] Loading sensitive information from environment variables.
+  - #### 1 hr Integration and debugging (part of code) [x] Adding a logical cache layer (in-memory structures or Redis can be used).
+  - #### 30 min Integration and debugging (part of code) [x] Adding a Makefile.
+  - #### 1 hr Integration and debugging (part of code) [x] Creating separate logical layers for handlers, business logic, cache, and storage.
+  - #### [ ] Writing unit tests.
+  - #### 30 min Integration and debugging (part of code) [x] A single docker-compose file to start all services, including the database, cache, etc.
+
+### NB: For convenience used github for version control in go project and the repo is private so no violation of the rules of the test.
