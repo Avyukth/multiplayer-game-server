@@ -14,7 +14,6 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// var db *mongo.Database
 type server struct {
 	gamestats.UnimplementedGameStatsServer
 	Mongo *MongoConnection
