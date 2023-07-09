@@ -72,9 +72,9 @@ cd clients && go run client.go
 
 ## Time Taken by Lila Assignments:
 
-- ### 30 Min [X] Documentation of the web service protocol.
+- ### 30 Min [X] Documentation of the web service protocol. [DocumentationProto.md](DocumentationProto.md)
 - ### 8 hrs [x] The code for the web service. ## 30 mins
-- ### 30 Min [x] A document explaining the design choices made when creating the web service, including how your service scales to support more than a million concurrent gamers.
+- ### 30 Min [x] A document explaining the design choices made when creating the web service, including how your service scales to support more than a million concurrent gamers. DesignChoices.md [DesignChoices.md](DesignChoices.md)
 - [ ] Preferred technologies:
   - #### [x] Using Protobuf for model generation and Data Transfer Objects (DTOs).
   - #### 2 hr Integration and debugging (part of code) [x] Using a No-SQL database for persistent storage.
