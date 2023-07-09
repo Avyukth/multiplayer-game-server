@@ -12,17 +12,17 @@ import (
 )
 
 var MongoConn *MongoConnection
+
 type MongoConnection struct {
 	Client *mongo.Client
 	Db     *mongo.Database
 }
 
 type mongoConfig struct {
-	Uri        string
-	Database   string
+	Uri         string
+	Database    string
 	MaxPoolSize uint64
 }
-
 
 func newMongoConnection(cfg mongoConfig) (*MongoConnection, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -60,12 +60,12 @@ func loadMongoConfig() mongoConfig {
 		log.Fatal("MONGODB_URI env var not set")
 	}
 
-    database := os.Getenv("MONGODB_DATABASE")
+	database := os.Getenv("MONGODB_DATABASE")
 	if database == "" {
 		log.Fatal("MONGODB_DATABASE env var not set")
 	}
 
-    maxPoolSize := os.Getenv("MONGODB_MAX_POOL_SIZE")
+	maxPoolSize := os.Getenv("MONGODB_MAX_POOL_SIZE")
 	if maxPoolSize == "" {
 		log.Fatal("MONGODB_MAX_POOL_SIZE env var not set")
 	}
@@ -75,13 +75,12 @@ func loadMongoConfig() mongoConfig {
 	}
 
 	mongoConfig := mongoConfig{
-		Uri:        uri,
-		Database:   database,
+		Uri:         uri,
+		Database:    database,
 		MaxPoolSize: maxPoolSizeInt,
 	}
 	return mongoConfig
 }
-
 
 func InitMongo() {
 	var err error

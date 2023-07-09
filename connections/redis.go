@@ -10,6 +10,7 @@ import (
 )
 
 var RedisConn *RedisConnection
+
 type RedisConnection struct {
 	Client *redis.Client
 }
@@ -19,8 +20,6 @@ type redisConfig struct {
 	Password string
 	DB       int
 }
-
-
 
 func newRedisConnection(cfg redisConfig) (*RedisConnection, error) {
 	rdb := redis.NewClient(&redis.Options{
@@ -39,14 +38,12 @@ func newRedisConnection(cfg redisConfig) (*RedisConnection, error) {
 	return &RedisConnection{Client: rdb}, nil
 }
 
-
 func (rc *RedisConnection) Close() {
 	err := rc.Client.Close()
 	if err != nil {
 		log.Println("Error disconnecting from Redis:", err)
 	}
 }
-
 
 func LoadRedisConfig() redisConfig {
 	db, err := strconv.Atoi(os.Getenv("REDIS_DB"))
