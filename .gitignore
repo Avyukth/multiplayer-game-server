@@ -1,0 +1,16 @@
+# Go related
+/bin/
+/pkg/
+*.exe
+*.test
+*.out
+
+# Ignore Go Modules Directory
+/go/
+
+# Ignore build directory
+/build/
+
+# IDE/Editor folders
+.vscode/
+.idea/
