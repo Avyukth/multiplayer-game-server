@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 services:
   server:
     build:
@@ -37,3 +37,40 @@ services:
       REDIS_REPLICATION_MODE: master
       ALLOW_EMPTY_PASSWORD: no
       REDIS_PASSWORD: ${REDIS_PASSWORD}
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.1
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.17.1
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - 5000:5000
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.1
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+volumes:
+  esdata:
+    driver: local
