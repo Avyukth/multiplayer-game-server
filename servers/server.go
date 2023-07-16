@@ -62,22 +62,38 @@ func main() {
 	connections.InitMongo()
 	defer connections.MongoConn.Close()
 	connections.InitRedis()
-
 	defer connections.RedisConn.Close()
+
 	server := loadServerConfig()
-	// start the gRPC server
+
 	grpcServer := grpc.NewServer()
 	gamestats.RegisterGameStatsServer(grpcServer, &handlers.Server{Mongo: connections.MongoConn, Redis: connections.RedisConn})
 
 	listener, err := net.Listen("tcp", server.Port)
 	if err != nil {
+		logMessage := connections.LogMessage{
+			Level:   "FATAL",
+			Message: "Failed to listen: " + err.Error(),
+		}
+		connections.ElasticConn.SendLog("my-log-index", logMessage)
 		log.Fatalf("Failed to listen: %v", err)
 	}
 
+	logMessage = connections.LogMessage{
+		Level:   "INFO",
+		Message: "Server is running on gRPC server with port " + server.Port + " ...",
+	}
+	connections.ElasticConn.SendLog("my-log-index", logMessage)
 	log.Println("Server is running on gRPC server with port " + server.Port + " ...")
 
 	if err := grpcServer.Serve(listener); err != nil {
+		logMessage := connections.LogMessage{
+			Level:   "FATAL",
+			Message: "Failed to serve: " + err.Error(),
+		}
+		connections.ElasticConn.SendLog("my-log-index", logMessage)
 		log.Fatalf("Failed to serve: %v", err)
 	}
+
 	os.Exit(0)
 }
