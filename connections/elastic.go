@@ -2,10 +2,13 @@ package connections
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"os"
+	"strings"
 
-	"github.com/olivere/elastic/v7"
+	elasticsearch "github.com/elastic/go-elasticsearch/v7"
+	esapi "github.com/elastic/go-elasticsearch/v7/esapi"
 )
 
 var ElasticConn *ElasticConnection
@@ -14,8 +17,9 @@ type LogMessage struct {
 	Level   string `json:"level"`
 	Message string `json:"message"`
 }
+
 type ElasticConnection struct {
-	Client *elastic.Client
+	Client *elasticsearch.Client
 }
 
 type elasticConfig struct {
@@ -25,21 +29,38 @@ type elasticConfig struct {
 func (ec *ElasticConnection) SendLog(index string, logMessage LogMessage) {
 	ctx := context.Background()
 
-	_, err := ec.Client.Index().
-		Index(index).
-		BodyJson(logMessage).
-		Do(ctx)
+	// Marshal the LogMessage to JSON
+	jsonBody, err := json.Marshal(logMessage)
+	if err != nil {
+		log.Println("Error marshaling log message: ", err)
+		return
+	}
+
+	req := esapi.IndexRequest{
+		Index:   index,
+		Body:    strings.NewReader(string(jsonBody)),
+		Refresh: "true",
+	}
+
+	res, err := req.Do(ctx, ec.Client)
 	if err != nil {
 		// Handle error
 		log.Println(err)
 	}
+
+	if res.IsError() {
+		log.Println(res.String())
+	}
 }
 
 func newElasticConnection(cfg elasticConfig) (*ElasticConnection, error) {
-	client, err := elastic.NewClient(
-		elastic.SetURL(cfg.Address),
-	)
+	config := elasticsearch.Config{
+		Addresses: []string{
+			cfg.Address,
+		},
+	}
 
+	client, err := elasticsearch.NewClient(config)
 	if err != nil {
 		log.Println("Error creating Elasticsearch client: ", err)
 		return nil, err
@@ -51,10 +72,8 @@ func newElasticConnection(cfg elasticConfig) (*ElasticConnection, error) {
 }
 
 func (ec *ElasticConnection) Close() {
-	ec.Client.Stop()
-
-	log.Println("Failed to close Elasticsearch connection")
-
+	// No explicit stop method in the official Elasticsearch Go client
+	log.Println("Closing Elasticsearch connection")
 }
 
 func LoadElasticConfig() elasticConfig {
