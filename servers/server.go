@@ -49,6 +49,16 @@ func loadServerConfig() serverConfig {
 }
 
 func main() {
+	connections.InitElastic()
+	defer connections.ElasticConn.Close()
+
+	logMessage := connections.LogMessage{
+		Level:   "INFO",
+		Message: "This is a test log message",
+	}
+
+	connections.ElasticConn.SendLog("my-log-index", logMessage)
+
 	connections.InitMongo()
 	defer connections.MongoConn.Close()
 	connections.InitRedis()
