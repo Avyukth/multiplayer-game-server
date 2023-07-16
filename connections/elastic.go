@@ -1,6 +1,7 @@
 package connections
 
 import (
+	"context"
 	"log"
 	"os"
 
@@ -9,23 +10,38 @@ import (
 
 var ElasticConn *ElasticConnection
 
+type LogMessage struct {
+	Level   string `json:"level"`
+	Message string `json:"message"`
+}
 type ElasticConnection struct {
 	Client *elastic.Client
 }
 
 type elasticConfig struct {
-	Address  string
-	Username string
-	Password string
+	Address string
+}
+
+func (ec *ElasticConnection) SendLog(index string, logMessage LogMessage) {
+	ctx := context.Background()
+
+	_, err := ec.Client.Index().
+		Index(index).
+		BodyJson(logMessage).
+		Do(ctx)
+	if err != nil {
+		// Handle error
+		log.Println(err)
+	}
 }
 
 func newElasticConnection(cfg elasticConfig) (*ElasticConnection, error) {
 	client, err := elastic.NewClient(
 		elastic.SetURL(cfg.Address),
-		elastic.SetBasicAuth(cfg.Username, cfg.Password),
 	)
 
 	if err != nil {
+		log.Println("Error creating Elasticsearch client: ", err)
 		return nil, err
 	}
 
@@ -43,9 +59,7 @@ func (ec *ElasticConnection) Close() {
 
 func LoadElasticConfig() elasticConfig {
 	elasticConfig := elasticConfig{
-		Address:  os.Getenv("ELASTIC_ADDRESS"),
-		Username: os.Getenv("ELASTIC_USERNAME"),
-		Password: os.Getenv("ELASTIC_PASSWORD"),
+		Address: os.Getenv("ELASTIC_ADDRESS"),
 	}
 	return elasticConfig
 }
