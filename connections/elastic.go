@@ -35,10 +35,10 @@ func newElasticConnection(cfg elasticConfig) (*ElasticConnection, error) {
 }
 
 func (ec *ElasticConnection) Close() {
-	err := ec.Client.Close()
-	if err != nil {
-		log.Println("Failed to close Elasticsearch connection")
-	}
+	ec.Client.Stop()
+
+	log.Println("Failed to close Elasticsearch connection")
+
 }
 
 func LoadElasticConfig() elasticConfig {
