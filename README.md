@@ -1,6 +1,6 @@
-# lila-app Service
+# game-app Service
 
-The `lila-app` service provides game statistics based on the geographic area code. This service is defined in the [Protocol Buffers (proto3)](https://developers.google.com/protocol-buffers) language and utilizes gRPC for service communication.
+The `game-app` service provides game statistics based on the geographic area code. This service is defined in the [Protocol Buffers (proto3)](https://developers.google.com/protocol-buffers) language and utilizes gRPC for service communication.
 
 ## Building and Running the Service
 
@@ -55,7 +55,7 @@ cd clients && go run client.go
 
 ---
 
-## Requirements by Lila Assignments and task completed marked with [x]:
+## Requirements by game Assignments and task completed marked with [x]:
 
 - [x] Documentation of the web service protocol.
 - [x] The code for the web service.
@@ -70,7 +70,7 @@ cd clients && go run client.go
   - [ ] Writing unit tests.
   - [x] A single docker-compose file to start all services, including the database, cache, etc.
 
-## Time Taken by Lila Assignments:
+## Time Taken by game Assignments:
 
 - ### 30 Min [X] Documentation of the web service protocol. [DocumentationProto.md](DocumentationProto.md)
 - ### 8 hrs [x] The code for the web service. ## 30 mins
