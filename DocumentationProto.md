@@ -1,12 +1,12 @@
-# lila-app Service Protocol Documentation
+# game-app Service Protocol Documentation
 
 ## Overview
 
-The `lila-app` service provides statistical data on games based on the geographic area code.
+The `game-app` service provides statistical data on games based on the geographic area code.
 
 ## Service Definition
 
-The service `lila-app` is defined with the following methods:
+The service `game-app` is defined with the following methods:
 
 - `GetGameStats(GameStatsRequest) returns (GameStatsResponse)`: This method fetches game statistics based on the provided area code.
 
