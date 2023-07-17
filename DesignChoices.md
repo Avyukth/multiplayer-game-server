@@ -1,6 +1,6 @@
-# Design Choices & Scalability of Lila-APP Service
+# Design Choices & Scalability of game-APP Service
 
-When designing the lila-app service, a few key considerations were made in order to ensure it is efficient, resilient, and scalable, capable of handling millions of concurrent gamers. Below, we dive into these design decisions and how they ensure scalability.
+When designing the game-app service, a few key considerations were made in order to ensure it is efficient, resilient, and scalable, capable of handling millions of concurrent gamers. Below, we dive into these design decisions and how they ensure scalability.
 
 ## gRPC and Protobuf
 
@@ -32,7 +32,7 @@ Breaking down the application into microservices would enable each component to 
 
 #### ( Implemented, This project has been developed using the architecture of a microservices point of view.)
 
-##### separate services for each microservice e.g lila-app, lila-app-redis, lila-app-mongodb.
+##### separate services for each microservice e.g game-app, game-app-redis, game-app-mongodb.
 
 ## 2 Auto-Scaling
 
@@ -52,4 +52,4 @@ Database sharding can also be implemented to increase the ability of the service
 
 #### (Not Implemented in this Project)
 
-By employing these strategies and principles, the lila-app service is designed to efficiently scale and handle the load of more than a million concurrent gamers.
+By employing these strategies and principles, the game-app service is designed to efficiently scale and handle the load of more than a million concurrent gamers.
