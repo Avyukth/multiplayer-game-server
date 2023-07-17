@@ -10,11 +10,23 @@ import (
 	"github.com/Avyukth/lila-assgnm/connections"
 	"github.com/Avyukth/lila-assgnm/handlers"
 	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 	"google.golang.org/grpc"
 )
 
 type serverConfig struct {
 	Port string
+}
+
+var logger *zap.Logger
+
+const logPath = "./logs/go.log"
+
+func setupLog() {
+	os.OpenFile(logPath, os.O_RDONLY|os.O_CREATE, 0666)
+	c := zap.NewProductionConfig()
+	c.OutputPaths = []string{"stdout", logPath}
+	logger, _ = c.Build()
 }
 
 func init() {
@@ -49,6 +61,7 @@ func loadServerConfig() serverConfig {
 }
 
 func main() {
+	setupLog()
 	connections.InitElastic()
 	defer connections.ElasticConn.Close()
 
@@ -76,7 +89,7 @@ func main() {
 			Message: "Failed to listen: " + err.Error(),
 		}
 		connections.ElasticConn.SendLog("my-log-index", logMessage)
-		log.Fatalf("Failed to listen: %v", err)
+		logger.Sugar().Fatalf("Failed to listen: %v", err)
 	}
 
 	logMessage = connections.LogMessage{
@@ -84,7 +97,7 @@ func main() {
 		Message: "Server is running on gRPC server with port " + server.Port + " ...",
 	}
 	connections.ElasticConn.SendLog("my-log-index", logMessage)
-	log.Println("Server is running on gRPC server with port " + server.Port + " ...")
+	logger.Println("Server is running on gRPC server with port " + server.Port + " ...")
 
 	if err := grpcServer.Serve(listener); err != nil {
 		logMessage := connections.LogMessage{
