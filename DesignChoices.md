@@ -1,5 +1,7 @@
 # Design Choices & Scalability of game-APP Service
 
+![Design Diagram](System-Design.png "System Design")
+
 When designing the game-app service, a few key considerations were made in order to ensure it is efficient, resilient, and scalable, capable of handling millions of concurrent gamers. Below, we dive into these design decisions and how they ensure scalability.
 
 ## gRPC and Protobuf
