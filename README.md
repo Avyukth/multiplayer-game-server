@@ -1,5 +1,7 @@
 # game-app Service
 
+![Design Diagram](System-Design.png "System Design")
+
 The `game-app` service provides game statistics based on the geographic area code. This service is defined in the [Protocol Buffers (proto3)](https://developers.google.com/protocol-buffers) language and utilizes gRPC for service communication.
 
 ## Building and Running the Service
