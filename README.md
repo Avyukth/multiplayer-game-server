@@ -57,7 +57,7 @@ cd clients && go run client.go
 
 ---
 
-## Requirements by game Assignments and task completed marked with [x]:
+## Requirements task completed marked with [x]:
 
 - [x] Documentation of the web service protocol.
 - [x] The code for the web service.
